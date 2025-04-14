@@ -2,21 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PotionTranslater : MonoBehaviour
 {
-    public EventListener potionListener;
+    public UnityEvent CheckObjectPos;
     public int potionIndex = 0;
-    public PotionScript potionScript;
+    public int objectIndex = 0;
+    public MagicSpawner spawner;
+    PotionScript potionScript;
+    ObjectScript objectScript;
 
-    private void Start()
+    public void IsMagicHappening()
     {
-        potionScript.grabbed.AddListener(StorePotionValue);
-        
-    }
-
-    public void StorePotionValue(int value)
-    {
-        potionIndex = value;
+        CheckObjectPos.Invoke();
+        if (objectIndex > 0 && objectIndex < 6)
+        {
+            objectScript = spawner.objectList[objectIndex].GetComponent<ObjectScript>();
+            potionScript = spawner.potionList[potionIndex].GetComponent<PotionScript>();
+            objectScript.StartListening(potionScript);
+        }
+        potionScript.BeingPutDown();
     }
 }
