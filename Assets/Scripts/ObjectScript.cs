@@ -150,13 +150,14 @@ public class ObjectScript : MonoBehaviour
     void BeginReset()
     {
         StartCoroutine(ResetObjects());
-        
     }
 
     // This couroutine tells the object to reset itself to look like when it was instantiated
     IEnumerator ResetObjects()
     {
+        // transmogrify is stopped so transformations applied to the object don't overlap
         StopCoroutine(transmogrify);
+
         // Resets the time variable for the timer below
         time = 0;
 
