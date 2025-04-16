@@ -41,7 +41,7 @@ public class ObjectScript : MonoBehaviour
     {
         // Subscribes to different events at the start of the script
         translater.CheckObjectPos.AddListener(IsMouseHovering);
-        translater.Resetting.AddListener(beginReset);
+        translater.Resetting.AddListener(BeginReset);
 
         // Tracks the position the object spawned at
         startPos = transform.position;
@@ -53,13 +53,11 @@ public class ObjectScript : MonoBehaviour
     public void MouseIsAbove()
     {
         mouseIsOver = true;
-        //Debug.Log("mouse entered");
     }
 
     public void MouseIsntAbove()
     {
         mouseIsOver = false;
-        //Debug.Log("mouse exited");
     }
 
     // This function tells the Potion Translater this object's index, but only if the mouse is over the object
@@ -78,20 +76,20 @@ public class ObjectScript : MonoBehaviour
     public void StartListening(PotionScript script)
     {
         potionScript = script;
-        potionScript.potionReturning.AddListener(beginTransmogrify);
+        potionScript.potionReturning.AddListener(BeginTransmogrify);
     }
 
     // The function is used to start a coroutine (since listeners can't start coroutines themselves)
     // It also tells this object to stop listening to the potion beingpoured on it,
     // so it doesn't accidentally run when the same potion is being poured onto a different object
-    void beginTransmogrify()
+    private void BeginTransmogrify()
     {
-        potionScript.potionReturning.RemoveListener(beginTransmogrify);
+        potionScript.potionReturning.RemoveListener(BeginTransmogrify);
         transmogrify = StartCoroutine(Transmogrify());
     }
 
     // Transmogrify is the function that makes the potion effect the appearene of the objects
-    IEnumerator Transmogrify()
+    private IEnumerator Transmogrify()
     {
         // Resets the time variable for the timer below
         time = 0;
@@ -149,20 +147,21 @@ public class ObjectScript : MonoBehaviour
     }
 
     // The function is used to start a coroutine (since listeners can't start coroutines themselves)
-    public void beginReset()
+    void BeginReset()
     {
-        StopCoroutine(transmogrify);
         StartCoroutine(ResetObjects());
+        
     }
 
     // This couroutine tells the object to reset itself to look like when it was instantiated
     IEnumerator ResetObjects()
     {
+        StopCoroutine(transmogrify);
         // Resets the time variable for the timer below
         time = 0;
 
         // The object resets its image by referencing its index in the spawner
-        this.GetComponent<Image>().sprite = spawner.objectSprite[objectType];
+        this.GetComponent<Image>().sprite = spawner.objectSprite[objectType - 1];
 
         // These rot and scale store the current transform values of the object
         Vector3 rot = transform.eulerAngles;

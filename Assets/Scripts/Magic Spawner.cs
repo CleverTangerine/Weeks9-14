@@ -86,8 +86,6 @@ public class MagicSpawner : MonoBehaviour
         // This intuitively makes them all spawn in unique positions with unique sprites
         newObject.transform.position = new Vector2(4 * (index - 2.5f), -3);
         newObject.transform.localScale = Vector2.one * 80;
-        Debug.Log(index);
-        
 
         // Getting a reference to the prefabs object script, in order to inject some values we can't apply from the editor
         ObjectScript objectScript = newObject.GetComponent<ObjectScript>();
@@ -99,6 +97,4 @@ public class MagicSpawner : MonoBehaviour
         objectScript.spawner = this;
         newObject.GetComponent<Image>().sprite = objectSprite[index - 1];
     }
-
-    
 }

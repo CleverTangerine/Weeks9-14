@@ -47,7 +47,6 @@ public class PotionScript : MonoBehaviour
     // It's used to let the player drag the potion around
     public void BeingPickedUp()
     {
-        Debug.Log("Indeed it be pickin up");
         // transform.position follows the mouse in worldspace
         Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = pos;
