@@ -129,6 +129,7 @@ public class ObjectScript : MonoBehaviour
                 case 3:
                     // imageCount increases with the curve to make it more dynamic
                     imageCount += curve.Evaluate(time);
+
                     // Once imageCount has increased enough, it will pick a random sprite to display
                     if (imageCount > 50)
                     {

@@ -50,7 +50,6 @@ public class PotionScript : MonoBehaviour
         // transform.position follows the mouse in worldspace
         Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = pos;
-        //pos = transform.position; // it likes this because transform isnt being changed
     }
 
     // This script is triggerd by the UnityEvent "PointerUp," which triggers when Left Click is released over the sprite
